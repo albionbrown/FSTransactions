@@ -1,0 +1,15 @@
+{
+    "name": "albionbrown/fs-transactions",
+    "description": "A library for managing file system transactions",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "authors": [
+        {
+            "name": "Josh Brown",
+            "email": "joshbrown8159@gmail.com"
+        }
+    ],
+    "require": {}
+}
