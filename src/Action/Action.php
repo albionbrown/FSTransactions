@@ -14,4 +14,13 @@ abstract class Action
    * Reverses the effects of execute()
    */
   public abstract function reverse();
+
+  /**
+   * Verifies that an object is an instance of
+   * \FSTransactions\Action\Action
+   */
+  public static function isActionInstance($action) {
+
+    return $action instanceof Action\ActionBase ? true : false;
+  }
 }
