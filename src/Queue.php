@@ -17,7 +17,11 @@ class Queue
    * @return void
    */
   public function addToQueue($action) {
-    
+
+    if (!Action\Action::isActionInstance($action)) {
+      throw new TransactionException("Class given is not an instance of \FSTransactions\Action\Action");
+    }
+
     $this->actionsQueue[] = $action;
   }
 
