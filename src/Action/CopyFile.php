@@ -4,7 +4,7 @@ namespace FSTransactions\Action;
 
 use FSTransactions;
 
-class Copy extends ActionBase {
+class CopyFile extends Action {
 
   /**
    * The path of the file to copy
