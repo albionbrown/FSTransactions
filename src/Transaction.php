@@ -34,10 +34,6 @@ class Transaction
    * @param FSTransaction\ActionBase $action The action to be performed during the transaction
    */
   public function addAction($action) {
-
-    if (!$action instanceof Action\ActionBase) {
-      throw new Exception("Action must be an instance of \FSTransactions\Action\ActionBase");
-    }
     
     $this->queue->addToQueue($action);
   }
