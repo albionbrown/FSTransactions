@@ -2,7 +2,7 @@
 
 namespace FSTransactions\Action;
 
-abstract class ActionBase
+abstract class Action
 {
   
   /**
