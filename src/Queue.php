@@ -16,8 +16,9 @@ class Queue
    * @param FSTransactions\ActionBase $action
    * @return void
    */
-  public function addToQueue(ActionBase $action) {
+  public function addToQueue($action) {
     
+    $this->actionsQueue[] = $action;
   }
 
   /**
