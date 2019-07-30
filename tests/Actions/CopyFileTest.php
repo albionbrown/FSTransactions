@@ -35,4 +35,8 @@ class CopyFileTest extends TestCase
 
     $this->assertEquals($sourceFileContents, $destinationFileContents);
   }
+
+  public function testCopyFileReverseSuccess() {
+    
+  }
 }
