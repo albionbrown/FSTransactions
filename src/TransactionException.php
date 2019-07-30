@@ -2,6 +2,6 @@
 
 namespace FSTransactions;
 
-abstract class TransactionException extends \TransactionException{
+class TransactionException extends \Exception{
 
 }
