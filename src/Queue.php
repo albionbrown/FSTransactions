@@ -2,6 +2,8 @@
 
 namespace FSTransactions;
 
+use \FSTransactions\Action\Action;
+
 /**
  * 
  */
@@ -18,7 +20,7 @@ class Queue
    */
   public function addToQueue($action) {
 
-    if (!Action\Action::isActionInstance($action)) {
+    if (!Action::isActionInstance($action)) {
       throw new TransactionException("Class given is not an instance of \FSTransactions\Action\Action");
     }
 
