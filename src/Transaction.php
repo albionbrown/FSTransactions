@@ -20,15 +20,6 @@ class Transaction
   }
 
   /**
-   * Rollback the transaction incase the object instance
-   * is destroyed before the transaction could be completed
-   */
-  public function __destruct() {
-
-    $this->rollback();
-  }
-
-  /**
    * Add an action to the transaction queue
    * 
    * @param FSTransaction\ActionBase $action The action to be performed during the transaction
