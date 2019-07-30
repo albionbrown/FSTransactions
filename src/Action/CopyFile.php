@@ -2,7 +2,7 @@
 
 namespace FSTransactions\Action;
 
-use FSTransactions;
+use FSTransactions\Action\Action;
 
 class CopyFile extends Action {
 
@@ -25,10 +25,11 @@ class CopyFile extends Action {
   public function execute() {
 
     /* @todo check that directories exist and PHP has 
-     * permission to write to the destination */
+     * permission to write to the destination 
+     * @todo Check that source exists */
 
     if (!copy($this->source, $this->destination)) {
-      throw new TransactionException("Failed to copy ");
+      throw new \FSTransactions\TransactionException("Failed to copy ");
     }
   }
 
@@ -38,7 +39,7 @@ class CopyFile extends Action {
   public function reverse() {
 
     if (!unlink($this->destination)) {
-      throw new RollbackFailureException("");
+      throw new \FSTransactions\RollbackFailureException("");
     }
   }
 }
