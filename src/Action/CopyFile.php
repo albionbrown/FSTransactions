@@ -29,7 +29,7 @@ class CopyFile extends Action {
      * @todo Check that source exists */
 
     if (!copy($this->source, $this->destination)) {
-      throw new \FSTransactions\TransactionException("Failed to copy ");
+      throw new \FSTransactions\TransactionException("Failed to copy {$this->source} to {$this->destination}");
     }
   }
 
@@ -39,7 +39,7 @@ class CopyFile extends Action {
   public function reverse() {
 
     if (!unlink($this->destination)) {
-      throw new \FSTransactions\RollbackFailureException("");
+      throw new \FSTransactions\RollbackFailureException("Failed to rollback. Could not delete {$this->destination}");
     }
   }
 }
