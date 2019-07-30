@@ -21,6 +21,6 @@ abstract class Action
    */
   public static function isActionInstance($action) {
 
-    return $action instanceof Action\ActionBase ? true : false;
+    return $action instanceof Action ? true : false;
   }
 }
