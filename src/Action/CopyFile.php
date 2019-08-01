@@ -3,6 +3,8 @@
 namespace FSTransactions\Action;
 
 use FSTransactions\Action\Action;
+use FSTransactions\Exception\TransactionException;
+use FSTransactions\Exception\RollbackFailureException;
 
 class CopyFile extends Action {
 
@@ -24,12 +26,24 @@ class CopyFile extends Action {
 
   public function execute() {
 
-    /* @todo check that directories exist and PHP has 
-     * permission to write to the destination 
-     * @todo Check that source exists */
+    $path = explode('/', $this->destination);
+    $fileName = end($path);
+    array_pop($path);
+    $path = implode('/', $path);
 
-    if (!copy($this->source, $this->destination)) {
-      throw new \FSTransactions\TransactionException("Failed to copy {$this->source} to {$this->destination}");
+    // Check if the destination is actually a file
+    if (is_file($path)) {
+      throw new TransactionException("{$this->destination} is not a directory");
+    }
+
+    // Check if the directory is writable
+    if (!is_writable($path)) {
+      throw new TransactionException("{$this->destination} is not writable");
+    }
+
+    // Attempt the move the file
+    if (!copy($this->source, $path.'/'.$fileName)) {
+      throw new TransactionException("Failed to copy {$this->source} to {$this->destination}");
     }
   }
 
@@ -39,7 +53,7 @@ class CopyFile extends Action {
   public function reverse() {
 
     if (!unlink($this->destination)) {
-      throw new \FSTransactions\RollbackFailureException("Failed to rollback. Could not delete {$this->destination}");
+      throw new RollbackFailureException("Failed to rollback. Could not delete {$this->destination}");
     }
   }
 }

@@ -9,7 +9,7 @@ use FSTransactions\Action\CopyFile;
 use FSTransactions\Action\MoveFile;
 
 use FSTransactions\Transaction;
-use FSTransactions\TransactionException;
+use FSTransactions\Exception\TransactionException;
 
 class NotAnAction{};
 
@@ -39,7 +39,7 @@ class QueueTest extends TestCase
 
   /**
    * Assert that the Queue::addToQueue method throws an
-   * \FSTransactions\TransactionException if an object that
+   * \FSTransactions\Exception\TransactionException if an object that
    * doesn't extend \FSTransactions\Action\Action
    */
   public function testAddToQueueFailOnInstance() {

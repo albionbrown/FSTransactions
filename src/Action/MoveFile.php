@@ -26,14 +26,14 @@ class MoveFile extends Action
   public function execute() {
 
     if (!rename($this->source, $this->destination)) {
-      throw new \FSTransactions\TransactionException("Failed to move {$this->source} to {$this->destination}");
+      throw new \FSTransactions\Exception\TransactionException("Failed to move {$this->source} to {$this->destination}");
     }
   }
 
   public function reverse() {
     
     if (!rename($this->destination, $this->source)) {
-      throw new \FSTransactions\RollbackFailureException("Failed to rollback. Could not move {$this->destination} to {$this->source}");
+      throw new \FSTransactions\Exception\RollbackFailureException("Failed to rollback. Could not move {$this->destination} to {$this->source}");
     }
   }
 }

@@ -3,21 +3,32 @@
 use PHPUnit\Framework\TestCase;
 
 use \FSTransactions\Action\CopyFile;
+use \FSTransactions\Exception\TransactionException;
 
 class CopyFileTest extends TestCase
 {
 
-  private $destinationFilePath;
+  private $source;
+
+  private $destination;
 
   public function setUp() {
 
-    // Ensure source file exists
+    $this->source = __DIR__.'/../test_files/CopyFileTestSource.txt';
+    $this->destination = __DIR__.'/../test_files/CopyFileTestDestination.txt';
+
+    // Create a test file
+    fopen($this->source, 'x+');
   }
 
   public function tearDown() {
 
-    if (file_exists($this->destinationFilePath)) {
-      unlink($this->destinationFilePath);
+    if (file_exists($this->source)) {
+      unlink($this->source);
+    }
+
+    if (file_exists($this->destination)) {
+      unlink($this->destination);
     }
   }
 
@@ -28,18 +39,28 @@ class CopyFileTest extends TestCase
    */
   public function testCopyFileExecuteSuccess() {
 
-    $sourceFilePath = __DIR__.'/../test_files/CopyFileTestSource.txt';
-    $this->destinationFilePath = __DIR__.'/../test_files/CopyTestTestDestination.txt';
-
-    $action = new Copyfile($sourceFilePath, $this->destinationFilePath);
+    $action = new Copyfile($this->source, $this->destination);
     $action->execute();
 
-    $this->assertFileExists($this->destinationFilePath);
+    $this->assertFileExists($this->destination);
 
-    $sourceFileContents = file_get_contents($sourceFilePath);
-    $destinationFileContents = file_get_contents($this->destinationFilePath);
+    $sourceFileContents = file_get_contents($this->source);
+    $destinationFileContents = file_get_contents($this->destination);
 
     $this->assertEquals($sourceFileContents, $destinationFileContents);
+  }
+
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
+  function testCopyFileExecuteFail() {
+    
+    $this->expectException(TransactionException::class);
+
+    $action = new Copyfile($this->source, str_replace('test_files', 'non_existent_directory', $this->destination));
+    $action->execute();
   }
 
   /**
@@ -47,17 +68,14 @@ class CopyFileTest extends TestCase
    * The copied file should be removed
    */
   public function testCopyFileReverseSuccess() {
-    
-    $sourceFilePath = __DIR__.'/../test_files/CopyFileTestSource.txt';
-    $this->destinationFilePath = __DIR__.'/../test_files/CopyTestTestDestination.txt';
 
-    $action = new Copyfile($sourceFilePath, $this->destinationFilePath);
+    $action = new Copyfile($this->source, $this->destination);
     $action->execute();
 
-    $this->assertFileExists($this->destinationFilePath);
+    $this->assertFileExists($this->destination);
 
     $action->reverse();
 
-    $this->assertFileNotExists($this->destinationFilePath);
+    $this->assertFileNotExists($this->destination);
   }
 }

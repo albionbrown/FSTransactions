@@ -1,6 +1,6 @@
 <?php
 
-namespace FSTransactions;
+namespace FSTransactions\Exception;
 
 class TransactionException extends \Exception{
 

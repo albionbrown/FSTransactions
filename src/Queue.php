@@ -3,6 +3,7 @@
 namespace FSTransactions;
 
 use \FSTransactions\Action\Action;
+use \FSTransactions\Exception\TransactionException;
 
 /**
  * 
